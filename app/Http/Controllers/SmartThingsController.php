@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Smart;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Facades\Datatables;
 use App\Models;
+
 
 class SmartThingsController extends Controller
 {
@@ -29,9 +31,19 @@ class SmartThingsController extends Controller
 
     public function viewSmartList()
     {
-        $smarts = Smart::select('id','type', 'brand', 'model', 'color','avaibility')->get();
-        return view('view_smart', ['smarts' => $smarts]);
-    }
+        // $smarts = Smart::select('id','type', 'brand', 'model', 'color','avaibility')->get();
+        // return view('view_smart', ['smarts' => $smarts]);
+        $smarts = Smart::select(['id','type', 'brand', 'model', 'color','avaibility'])->get();
+       
+        return Datatables::of($smarts) 
+                     ->addColumn('action', function(){
+                    return '<button class="btn btn-danger">See</button>';
+                    })
+                     ->rawColumns(['action'])
+                     ->make(true);
+    
+   }
+
 
     public function submittedSmartView()
     {
