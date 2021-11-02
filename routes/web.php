@@ -8,6 +8,7 @@ Route::group(['prefix' => 'Smart', 'namespace' => 'App\Http\Controllers'], funct
     Route::post('submit', 'SmartThingsController@addSmartSubmit')->name('add.smart.submit');
     Route::get('view', 'SmartThingsController@viewSmartList')->name('view.smart.list');
     Route::get('submitted', 'SmartThingsController@submittedSmartView')->name('submitted.smart.view');
+    // Route::get('mail', 'SmartThingsController@newMail')->name('new.mail.view');
 });
 
 Route::get('/', function () {

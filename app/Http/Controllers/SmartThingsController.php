@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Smart;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Facades\Datatables;
+use Yajra\Datatables\Datatables;
 use App\Models;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Email;
+use App\Events\DeviceInformationIsAddedEvent;
 
 
 class SmartThingsController extends Controller
@@ -25,14 +28,19 @@ class SmartThingsController extends Controller
         $smart->avaibility = $request->avaibility;
         $smart->save();
 
+        event(new DeviceInformationIsAddedEvent("noob@noob25.com"));
+
         return redirect()->route('submitted.smart.view');
 
     }
 
-    public function viewSmartList()
+    public function viewSmartList(Request $request)
     {
         // $smarts = Smart::select('id','type', 'brand', 'model', 'color','avaibility')->get();
         // return view('view_smart', ['smarts' => $smarts]);
+      
+        if ($request->ajax()){
+      
         $smarts = Smart::select(['id','type', 'brand', 'model', 'color','avaibility'])->get();
        
         return Datatables::of($smarts) 
@@ -42,6 +50,9 @@ class SmartThingsController extends Controller
                      ->rawColumns(['action'])
                      ->make(true);
     
+             }        
+
+                return view('view_smart');        
    }
 
 
@@ -49,4 +60,12 @@ class SmartThingsController extends Controller
     {
         return view('after_submit');
     }
+
+    public function newMail()
+    {
+        // Mail::to('noob@noob.com')->send(new Email());
+    }
+
+
 }
+  

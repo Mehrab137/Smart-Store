@@ -15,6 +15,7 @@
                             <th>Model Name</th>
                             <th>Color</th>
                             <th>Avaibility</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -33,30 +34,28 @@
 <script>
 
     $(document).ready( function () {
-    $('#smart_table').DataTable(
+    $('#smart_table').DataTable({
         processing: true,
         serverside: true,
 
-        ajax: {{ route('view.smart.list') }},
+        ajax: "{{ route('view.smart.list') }}",
 
         columns: [
-            {data: 'id' = name: 'id'},
-            {data: 'type' = name: 'type'},
-            {data: 'brand' = name: 'brand'},
-            {data: 'model' = name: 'model'},
-            {data: 'color' = name: 'color'},
-            {data: 'avaibility' = name: 'avaibility'},
+            {data: 'id' , name: 'id'},
+            {data: 'type' , name: 'type'},
+            {data: 'brand' , name: 'brand'},
+            {data: 'model' , name: 'model'},
+            {data: 'color' , name: 'color'},
+            {data: 'avaibility' , name: 'avaibility'},
             {
                       data: 'action', 
                       name: 'action', 
                       orderable: true, 
                       searchable: true,
-                  },
-
-       
-        ]
-    );
-});
+                  }
+             ]
+         });
+    });
 
 </script>
     
